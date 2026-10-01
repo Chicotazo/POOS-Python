@@ -1,11 +1,8 @@
 from paciente import Paciente
-
-from paciente import Paciente
 pacientes:list[Paciente]=[
     Paciente("11.111.111-1","Juan Perez","30","Fonasa"),
     Paciente("22.222.222-2","Maria Gonzalez","25","Isapre")         
 ]
-
 def leer_numero(mensaje:str)->int:
     while True:
         try:
@@ -47,7 +44,11 @@ def agregar_paciente()-> None:
     elif op==4:
         prevision="Otro"
 
-    paciente=Paciente(rut,nombre,edad,prevision)
+    try:
+        paciente=Paciente(rut,nombre,edad,prevision)
+    except(ValueError, TypeError) as e:
+        print(f"Error al crear el paciente: {e}")
+        return
     pacientes.append(paciente)  
     print("Paciente agregado exitosamente.")
     print(f"Total de pacientes: {len(pacientes)}")
@@ -94,7 +95,11 @@ def editar_paciente()->None:
         op=leer_numero("Ingrese una opción:")
         if op==1:
             nombre_nuevo=input("Ingrese nuevo nombre:")
-            paciente.nombre=nombre_nuevo
+            try:
+                paciente.nombre=nombre_nuevo
+            except (ValueError, TypeError) as e:
+                print(f"Error al actualizar nombre: {e}")
+                return
             print("Nombre Actualizado")
         elif op==2:
             edad_nueva=leer_numero("Ingrese nueva edad:")
